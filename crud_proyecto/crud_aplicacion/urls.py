@@ -5,7 +5,6 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register('ciudades', views.ciudadView)
 router.register('municipios', views.municipioView)
-router.register('direcciones', views.direccionView)
 router.register('sucursales', views.sucursalView)
 router.register('productos', views.productoView)
 router.register('inventarios', views.inventarioView)
@@ -22,6 +21,9 @@ router.register('gerentes', views.gerenteView)
 router.register('sucursales_inventarios', views.sucursal_inventarioView)
 router.register('ventas_productos', views.venta_productoView)
 router.register('proveedores_productos', views.proveedor_productoView)
+router.register('tipoSuscripciones', views.tipoSuscripcionView)
+router.register('categorias', views.categoriaView)
+router.register('especialidades', views.especialidadView)
 
 
 urlpatterns = [

@@ -4,7 +4,6 @@ from .models import *
 
 admin.site.register(ciudad)
 admin.site.register(municipio)
-admin.site.register(direccion)
 admin.site.register(sucursal)
 admin.site.register(producto)
 admin.site.register(inventario)
@@ -21,4 +20,7 @@ admin.site.register(gerente)
 admin.site.register(sucursal_inventario)
 admin.site.register(venta_Producto)
 admin.site.register(proveedor_Producto)
+admin.site.register(categoria)
+admin.site.register(tipoSuscripcion)
+admin.site.register(especialidad)
 

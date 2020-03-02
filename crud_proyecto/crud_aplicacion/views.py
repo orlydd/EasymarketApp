@@ -1,23 +1,31 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .models import ciudad, municipio, direccion, sucursal, producto, inventario, precioProducto, proveedor, pago
+from .models import ciudad, municipio, sucursal, producto, inventario, precioProducto, proveedor, pago, categoria, tipoSuscripcion, especialidad
 from .models import cliente, empleado, venta, ventaPago, suscripcion, cajero, gerente, sucursal_inventario, venta_Producto, proveedor_Producto
-from .serializers import ciudadSerializer, municipioSerializer, direccionSerializer, sucursalSerializer, productoSerializer, inventarioSerializer
-from .serializers import precioProductoSerialiazer, proveedorSerializer, pagoSerializer, clienteSerializer
+from .serializers import ciudadSerializer, municipioSerializer, sucursalSerializer, productoSerializer, inventarioSerializer
+from .serializers import precioProductoSerialiazer, proveedorSerializer, pagoSerializer, clienteSerializer, especialidadSerializer
 from .serializers import gerenteSerializer,sucursal_inventarioSerializer, venta_productoSerializer, proveedor_productoSerializer
-from .serializers import empleadoSerializer, ventaSerializer, ventaPagoSerializer, suscripcionSerializer, cajeroSerializer
+from .serializers import empleadoSerializer, ventaSerializer, ventaPagoSerializer, suscripcionSerializer, cajeroSerializer, categoriaSerializer, tipoSuscripcionSerializer
 
 class ciudadView(viewsets.ModelViewSet):
     queryset = ciudad.objects.all()
     serializer_class = ciudadSerializer
 
+class especialidadView(viewsets.ModelViewSet):
+    queryset = especialidad.objects.all()
+    serializer_class = especialidadSerializer
+
 class municipioView(viewsets.ModelViewSet):
     queryset = municipio.objects.all()
     serializer_class = municipioSerializer
 
-class direccionView(viewsets.ModelViewSet):
-    queryset = direccion.objects.all()
-    serializer_class = direccionSerializer
+class tipoSuscripcionView(viewsets.ModelViewSet):
+    queryset = tipoSuscripcion.objects.all()
+    serializer_class = tipoSuscripcionSerializer
+
+class categoriaView(viewsets.ModelViewSet):
+    queryset = categoria.objects.all()
+    serializer_class = categoriaSerializer
 
 class sucursalView(viewsets.ModelViewSet):
     queryset = sucursal.objects.all()

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ciudad, municipio, direccion, sucursal, producto, inventario, precioProducto, proveedor, pago
+from .models import ciudad, municipio, sucursal, producto, inventario, precioProducto, proveedor, pago, tipoSuscripcion, categoria, especialidad
 from .models import cliente, empleado, venta, ventaPago, suscripcion, cajero, gerente, sucursal_inventario, venta_Producto, proveedor_Producto
 
 class ciudadSerializer(serializers.ModelSerializer):
@@ -10,22 +10,17 @@ class ciudadSerializer(serializers.ModelSerializer):
 class municipioSerializer(serializers.ModelSerializer):
     class Meta:
         model = municipio
-        fields = ('id', 'nombre')
-
-class direccionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = direccion
-        fields = ('id', 'ciudadID', 'municipioID')
+        fields = ('id', 'nombre', 'ciudadID')
 
 class sucursalSerializer(serializers.ModelSerializer):
     class Meta:
         model = sucursal
-        fields = ('id', 'nombre', 'direccionID', 'activo')
+        fields = ('id', 'nombre', 'municipioID', 'activo')
 
 class productoSerializer(serializers.ModelSerializer):
     class Meta:
         model = producto
-        fields = ('id', 'nombre', 'categoria')
+        fields = ('id', 'nombre', 'categoriaID')
 
 class inventarioSerializer(serializers.ModelSerializer):
     class Meta:
@@ -40,7 +35,7 @@ class precioProductoSerialiazer(serializers.ModelSerializer):
 class proveedorSerializer(serializers.ModelSerializer):
     class Meta:
         model = proveedor
-        fields = ('id', 'nombre', 'telefono', 'direccionID', 'activo')
+        fields = ('id', 'nombre', 'telefono', 'ciudadID', 'activo')
 
 class pagoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -50,12 +45,12 @@ class pagoSerializer(serializers.ModelSerializer):
 class clienteSerializer(serializers.ModelSerializer):
     class Meta:
         model = cliente
-        fields = ('id', 'cedula', 'nombre', 'apellido', 'telefono', 'direccionID')
+        fields = ('id', 'cedula', 'nombre', 'apellido', 'telefono')
 
 class empleadoSerializer(serializers.ModelSerializer):
     class Meta:
         model = empleado
-        fields = ('id', 'cedula', 'nombre', 'apellido', 'fechaNacimiento', 'telefono', 'direccionID', 'sucursalID', 'activo')
+        fields = ('id', 'cedula', 'nombre', 'apellido', 'fechaNacimiento', 'telefono', 'sucursalID', 'activo')
 
 class ventaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -67,20 +62,35 @@ class ventaPagoSerializer(serializers.ModelSerializer):
         model = ventaPago
         fields = ('ventaID', 'pagoID')
 
+class tipoSuscripcionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = tipoSuscripcion
+        fields = ('id', 'nombre')
+
+class categoriaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = categoria
+        fields = ('id', 'nombre')
+
 class suscripcionSerializer(serializers.ModelSerializer):
     class Meta:
         model = suscripcion
-        fields = ('id', 'clienteID', 'fechaSuscripcion', 'tipo', 'activo')
+        fields = ('id', 'clienteID', 'fechaSuscripcion', 'tipoID', 'activo')
 
 class cajeroSerializer(serializers.ModelSerializer):
     class Meta:
         model = cajero
         fields = ('empleadoID', 'nroCaja')
 
+class especialidadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = especialidad
+        fields = ('id', 'nombre')
+
 class gerenteSerializer(serializers.ModelSerializer):
     class Meta:
         model = gerente
-        fields = ('empleadoID', 'especialidad')
+        fields = ('empleadoID', 'especialidadID')
 
 class sucursal_inventarioSerializer(serializers.ModelSerializer):
     class Meta:

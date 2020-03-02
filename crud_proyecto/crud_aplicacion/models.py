@@ -15,35 +15,19 @@ class ciudad(models.Model):
 class municipio(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=400, blank=False)
-
-    def __str__(self):
-        
-        return f'{self.nombre}'
-
-class direccion(models.Model):
-    id = models.AutoField(primary_key=True)
     ciudadID = models.ForeignKey(
         ciudad, on_delete=models.CASCADE
-    ) 
-    municipioID = models.ForeignKey(
-        municipio, on_delete=models.CASCADE
     )
-    calle = models.CharField(max_length=500, blank=False)
-
-    class Meta:
-        verbose_name = 'direccion'
-        verbose_name_plural = 'direcciones'
 
     def __str__(self):
         
-        return f'Sucursal en {self.ciudadID.nombre} : {self.municipioID.nombre}, {self.calle}' 
-
+        return f'{self.nombre}' 
 
 class sucursal(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=400, blank=False)
-    direccionID = models.ForeignKey(
-        direccion, on_delete=models.CASCADE
+    municipioID = models.ForeignKey(
+        municipio, on_delete=models.CASCADE
     )
     activo = models.BooleanField(default=True)
 
@@ -55,10 +39,29 @@ class sucursal(models.Model):
         
         return f'{self.nombre}'
 
+class categoria(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=400, blank=False)
+    def __str__(self):
+        
+        return f'{self.nombre}'
+
+class especialidad(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=400, blank=False)
+    class Meta:
+        verbose_name = 'especialidad'
+        verbose_name_plural = 'especialidades'
+    def __str__(self):
+        
+        return f'{self.nombre}'
+
 class producto(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=400, blank=False)
-    categoria = models.CharField(max_length=400, blank=False)
+    categoriaID = models.ForeignKey(
+        categoria, on_delete=models.CASCADE
+    )
     def __str__(self):
         
         return f'{self.nombre}'
@@ -88,8 +91,8 @@ class proveedor(models.Model):
     id = models.AutoField (primary_key = True)
     nombre = models.CharField(max_length=400, blank=False)
     telefono = models.CharField(max_length=15, blank=False, default='')
-    direccionID = models.ForeignKey(
-        direccion, on_delete= models.CASCADE
+    ciudadID = models.ForeignKey(
+        ciudad, on_delete= models.CASCADE
     )
     activo = models.BooleanField(default=True)
 
@@ -115,9 +118,6 @@ class cliente(models.Model):
     nombre = models.CharField(max_length=400, blank=False)
     apellido = models.CharField(max_length=400, blank=False)
     telefono = models.CharField(max_length=12, blank=False, default='')
-    direccionID = models.ForeignKey(
-        direccion, on_delete= models.CASCADE
-    )
     def __str__(self):
         
         return f'{self.nombre} {self.apellido}'
@@ -129,9 +129,6 @@ class empleado(models.Model):
     apellido = models.CharField(max_length=400, blank=False)
     fechaNacimiento = models.CharField(max_length=12, blank=False, default="")
     telefono = models.CharField(max_length=12, blank=False, default='')
-    direccionID = models.ForeignKey(
-        direccion, on_delete= models.CASCADE
-    )
     sucursalID = models.ForeignKey(
         sucursal, on_delete= models.CASCADE
     )
@@ -166,13 +163,22 @@ class ventaPago(models.Model):
         
         return f'Pago de la venta {self.ventaID.id}'
 
+class tipoSuscripcion(models.Model):
+    id = models.AutoField (primary_key = True)
+    nombre = models.CharField(max_length=400, blank=False)
+    def __str__(self):
+        
+        return f'{self.nombre}'
+
 class suscripcion(models.Model):
     id = models.AutoField (primary_key = True)
     clienteID = models.ForeignKey(
         cliente, on_delete=models.CASCADE
     )
     fechaSuscripcion = models.DateField(auto_now_add=True)
-    tipo = models.CharField(max_length=400, blank=False)
+    tipoID = models.ForeignKey(
+        tipoSuscripcion, on_delete=models.CASCADE
+    )
     activo = models.BooleanField(default=True)
 
     class Meta:
@@ -196,7 +202,9 @@ class gerente(models.Model):
     empleadoID = models.ForeignKey(
         empleado, on_delete=models.CASCADE
     )
-    especialidad = models.CharField(max_length=400, blank=False)
+    especialidadID = models.ForeignKey(
+        especialidad, on_delete=models.CASCADE
+    )
 
     def __str__(self):
         
