@@ -8,16 +8,24 @@ class ciudadSerializer(serializers.ModelSerializer):
         fields = ('id', 'nombre')
 
 class municipioSerializer(serializers.ModelSerializer):
+    ciudadID = ciudadSerializer()
     class Meta:
         model = municipio
         fields = ('id', 'nombre', 'ciudadID')
 
 class sucursalSerializer(serializers.ModelSerializer):
+    municipioID = municipioSerializer()
     class Meta:
         model = sucursal
         fields = ('id', 'nombre', 'municipioID', 'activo')
 
+class categoriaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = categoria
+        fields = ('id', 'nombre')
+
 class productoSerializer(serializers.ModelSerializer):
+    categoriaID = categoriaSerializer()
     class Meta:
         model = producto
         fields = ('id', 'nombre', 'categoriaID')
@@ -48,6 +56,7 @@ class clienteSerializer(serializers.ModelSerializer):
         fields = ('id', 'cedula', 'nombre', 'apellido', 'telefono')
 
 class empleadoSerializer(serializers.ModelSerializer):
+    sucursalID = sucursalSerializer()
     class Meta:
         model = empleado
         fields = ('id', 'cedula', 'nombre', 'apellido', 'fechaNacimiento', 'telefono', 'sucursalID', 'activo')
@@ -67,12 +76,9 @@ class tipoSuscripcionSerializer(serializers.ModelSerializer):
         model = tipoSuscripcion
         fields = ('id', 'nombre')
 
-class categoriaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = categoria
-        fields = ('id', 'nombre')
-
 class suscripcionSerializer(serializers.ModelSerializer):
+    tipoID = tipoSuscripcionSerializer()
+    clienteID = clienteSerializer()
     class Meta:
         model = suscripcion
         fields = ('id', 'clienteID', 'fechaSuscripcion', 'tipoID', 'activo')
@@ -85,7 +91,7 @@ class cajeroSerializer(serializers.ModelSerializer):
 class especialidadSerializer(serializers.ModelSerializer):
     class Meta:
         model = especialidad
-        fields = ('id', 'nombre')
+        fields = ('id', 'especialidadID')
 
 class gerenteSerializer(serializers.ModelSerializer):
     class Meta:
