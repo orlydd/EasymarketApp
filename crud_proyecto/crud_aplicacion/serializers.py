@@ -8,7 +8,6 @@ class ciudadSerializer(serializers.ModelSerializer):
         fields = ('id', 'nombre')
 
 class municipioSerializer(serializers.ModelSerializer):
-    ciudadID = ciudadSerializer()
     class Meta:
         model = municipio
         fields = ('id', 'nombre', 'ciudadID')
