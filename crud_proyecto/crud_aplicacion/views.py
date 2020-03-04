@@ -1,11 +1,42 @@
 from django.shortcuts import render
 from rest_framework import viewsets
+from django.http import HttpResponse
+from django.db.models import Count
+from django.db.models import Subquery
+from django.db.models import Max
 from .models import ciudad, municipio, sucursal, producto, inventario, precioProducto, proveedor, pago, categoria, tipoSuscripcion, especialidad
 from .models import cliente, empleado, venta, ventaPago, suscripcion, cajero, gerente, sucursal_inventario, venta_Producto, proveedor_Producto
 from .serializers import ciudadSerializer, municipioSerializer, sucursalSerializer, productoSerializer, inventarioSerializer
 from .serializers import precioProductoSerialiazer, proveedorSerializer, pagoSerializer, clienteSerializer, especialidadSerializer
 from .serializers import gerenteSerializer,sucursal_inventarioSerializer, venta_productoSerializer, proveedor_productoSerializer
 from .serializers import empleadoSerializer, ventaSerializer, ventaPagoSerializer, suscripcionSerializer, cajeroSerializer, categoriaSerializer, tipoSuscripcionSerializer
+from .serializers import municipioAuxSerializer, empleadoAuxSerializer, productoAuxSerializer, sucursalAuxSerializer
+from .serializers import suscripcionAuxSerializer, ventaAuxSerializer
+
+class ventaAuxView(viewsets.ModelViewSet):
+    queryset = venta.objects.all()
+    serializer_class = ventaAuxSerializer
+
+
+class suscripcionAuxView(viewsets.ModelViewSet):
+    queryset = suscripcion.objects.all()
+    serializer_class = suscripcionAuxSerializer
+
+class sucursalAuxView(viewsets.ModelViewSet):
+    queryset = sucursal.objects.all()
+    serializer_class = sucursalAuxSerializer
+
+class productoAuxView(viewsets.ModelViewSet):
+    queryset = producto.objects.all()
+    serializer_class = productoAuxSerializer
+
+class empleadoAuxView(viewsets.ModelViewSet):
+    queryset = empleado.objects.all()
+    serializer_class = empleadoAuxSerializer
+
+class municipioAuxView(viewsets.ModelViewSet):
+    queryset = municipio.objects.all()
+    serializer_class = municipioAuxSerializer
 
 class ciudadView(viewsets.ModelViewSet):
     queryset = ciudad.objects.all()

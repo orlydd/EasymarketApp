@@ -140,7 +140,7 @@ class empleado(models.Model):
 
 class venta(models.Model):
     id = models.AutoField (primary_key = True)
-    fechaVenta = models.DateTimeField(auto_now_add=True)
+    fechaVenta = models.DateField(auto_now_add=True)
     clienteID = models.ForeignKey(
         cliente, on_delete=models.CASCADE
     )
