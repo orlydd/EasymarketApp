@@ -31,11 +31,13 @@ router.register('proveedores_productos', views.proveedor_productoView)
 router.register('tipoSuscripciones', views.tipoSuscripcionView)
 router.register('categorias', views.categoriaView)
 router.register('especialidades', views.especialidadView)
-
-
-
+router.register('mejoresEmpleados', views.mejoresEmpleadosView)
+router.register('mejoresProductos', views.mejoresProductosView)
+router.register('mejoresSucursales', views.mejoresSucursalesView)
+router.register('proveedorAuxiliar', views.proveedorAuxView)
+router.register('funcion', views.funcionView, basename ='funcion')
 
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
 ]

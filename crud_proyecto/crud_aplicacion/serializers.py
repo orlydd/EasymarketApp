@@ -1,6 +1,17 @@
 from rest_framework import serializers
 from .models import ciudad, municipio, sucursal, producto, inventario, precioProducto, proveedor, pago, tipoSuscripcion, categoria, especialidad
 from .models import cliente, empleado, venta, ventaPago, suscripcion, cajero, gerente, sucursal_inventario, venta_Producto, proveedor_Producto
+from .models import mejoresEmpleados, mejoresProductos, mejoresSucursales, funcion
+
+class funcionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = funcion
+        fields = ('__all__')
+
+class mejoresProductosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = mejoresProductos
+        fields = ('__all__')
 
 class ciudadSerializer(serializers.ModelSerializer):
     class Meta:
@@ -60,6 +71,12 @@ class proveedorSerializer(serializers.ModelSerializer):
     class Meta:
         model = proveedor
         fields = ('id', 'nombre', 'telefono', 'ciudadID', 'activo')
+
+class proveedorAuxSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = proveedor
+        fields = ('id', 'nombre', 'telefono', 'ciudadID', 'activo')
+        depth = 1
 
 class pagoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -143,4 +160,16 @@ class proveedor_productoSerializer(serializers.ModelSerializer):
     class Meta:
         model = proveedor_Producto
         fields = ('proveedorID', 'productoID')
+
+class mejoresEmpleadosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = mejoresEmpleados
+        fields = ('__all__')
+        depth = 1
+
+class mejoresSucursalesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = mejoresSucursales
+        fields = ('__all__')
+        depth = 1
 

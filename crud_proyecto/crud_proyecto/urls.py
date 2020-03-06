@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from crud_aplicacion.views import mejoresEmpleados
 
 urlpatterns = [
     path('admin/', admin.site.urls),

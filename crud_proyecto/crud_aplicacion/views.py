@@ -3,35 +3,64 @@ from rest_framework import viewsets
 from django.http import HttpResponse
 from django.db.models import Count
 from django.db.models import Subquery
-from django.db.models import Max
+from django.db.models import Max, OuterRef
+from rest_framework.response import Response
 from .models import ciudad, municipio, sucursal, producto, inventario, precioProducto, proveedor, pago, categoria, tipoSuscripcion, especialidad
 from .models import cliente, empleado, venta, ventaPago, suscripcion, cajero, gerente, sucursal_inventario, venta_Producto, proveedor_Producto
+from .models import mejoresEmpleados, mejoresProductos, mejoresSucursales, funcion
 from .serializers import ciudadSerializer, municipioSerializer, sucursalSerializer, productoSerializer, inventarioSerializer
 from .serializers import precioProductoSerialiazer, proveedorSerializer, pagoSerializer, clienteSerializer, especialidadSerializer
 from .serializers import gerenteSerializer,sucursal_inventarioSerializer, venta_productoSerializer, proveedor_productoSerializer
 from .serializers import empleadoSerializer, ventaSerializer, ventaPagoSerializer, suscripcionSerializer, cajeroSerializer, categoriaSerializer, tipoSuscripcionSerializer
 from .serializers import municipioAuxSerializer, empleadoAuxSerializer, productoAuxSerializer, sucursalAuxSerializer
-from .serializers import suscripcionAuxSerializer, ventaAuxSerializer
+from .serializers import suscripcionAuxSerializer, ventaAuxSerializer, mejoresEmpleadosSerializer, mejoresProductosSerializer, mejoresSucursalesSerializer, funcionSerializer, proveedorAuxSerializer
 
 class ventaAuxView(viewsets.ModelViewSet):
     queryset = venta.objects.all()
     serializer_class = ventaAuxSerializer
 
+class proveedorAuxView(viewsets.ModelViewSet):
+    queryset = proveedor.objects.filter(activo=True)
+    serializer_class = proveedorAuxSerializer
+
+class mejoresSucursalesView(viewsets.ModelViewSet):
+    queryset = mejoresSucursales.objects.all()
+    serializer_class = mejoresSucursalesSerializer
+
+class mejoresProductosView(viewsets.ModelViewSet):
+    queryset = mejoresProductos.objects.all()
+    serializer_class = mejoresProductosSerializer
+
+class mejoresEmpleadosView(viewsets.ModelViewSet):
+    queryset = mejoresEmpleados.objects.all()
+    serializer_class = mejoresEmpleadosSerializer
 
 class suscripcionAuxView(viewsets.ModelViewSet):
-    queryset = suscripcion.objects.all()
+    queryset = suscripcion.objects.filter(activo=True)
     serializer_class = suscripcionAuxSerializer
 
 class sucursalAuxView(viewsets.ModelViewSet):
-    queryset = sucursal.objects.all()
+    queryset = sucursal.objects.filter(activo=True)
     serializer_class = sucursalAuxSerializer
 
 class productoAuxView(viewsets.ModelViewSet):
     queryset = producto.objects.all()
     serializer_class = productoAuxSerializer
 
+class funcionView(viewsets.ModelViewSet):
+
+    queryset = ''
+    serializer_class = funcionSerializer
+
+    def get(self, request):
+        productos = producto.objects.annotate(ultimo_precio=Subquery(precioProducto.objects.filter(
+            productoID=OuterRef('pk')).order_by('-fecha').values('monto')[:1]))
+        for producto in productos:
+            print(producto.ultimo_precio)
+            
+
 class empleadoAuxView(viewsets.ModelViewSet):
-    queryset = empleado.objects.all()
+    queryset = empleado.objects.filter(activo=True)
     serializer_class = empleadoAuxSerializer
 
 class municipioAuxView(viewsets.ModelViewSet):
@@ -121,3 +150,8 @@ class venta_productoView(viewsets.ModelViewSet):
 class proveedor_productoView(viewsets.ModelViewSet):
     queryset = proveedor_Producto.objects.all()
     serializer_class = proveedor_productoSerializer
+
+
+
+
+

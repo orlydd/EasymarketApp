@@ -81,7 +81,7 @@ class precioProducto(models.Model):
         producto, on_delete=models.CASCADE
     )
     monto = models.DecimalField(max_digits=10, decimal_places= 2, blank=False, default='')
-    fecha = models.DateField(auto_now_add=True)
+    fecha = models.DateField(auto_now=True)
 
     def __str__(self):
         
@@ -244,4 +244,41 @@ class proveedor_Producto(models.Model):
     def __str__(self):
         
         return f'Proovedor {self.proveedorID.nombre}, producto {self.productoID.nombre}'
+
+class mejoresEmpleados(models.Model):
+    id = models.IntegerField(primary_key=True)
+    empleadoNombre = models.CharField(max_length=400, blank=False)
+    empleadoApellido = models.CharField(max_length=400, blank=False)
+    sucursalID = models.ForeignKey(
+        sucursal, on_delete=models.DO_NOTHING
+    )
+    Ventas = models.IntegerField(max_length=5, blank=False, default='')
+
+    class Meta:
+        managed = False
+        db_table = 'mejoresempleadosnew'
+
+class mejoresProductos(models.Model):
+    id = models.IntegerField(primary_key=True)
+    producto = models.CharField(max_length=400, blank=False)
+    ventas = models.IntegerField(max_length=5, blank=False, default='')
+
+    class Meta:
+        managed = False
+        db_table = 'mejoresproductos'
+
+class mejoresSucursales(models.Model):
+    id = models.IntegerField(primary_key=True)
+    sucursalID = models.ForeignKey(
+        sucursal, on_delete=models.DO_NOTHING
+    )
+    ventas = models.IntegerField(blank=False, default='')
+
+    class Meta:
+        managed = False
+        db_table = 'mejoressucursales'
+
+class funcion(models.Model):
+    producto = models.CharField(max_length=400, blank=False)
+    precio = models.DecimalField(max_digits=10, decimal_places = 2, blank=False, default='')
 
