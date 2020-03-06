@@ -282,3 +282,11 @@ class funcion(models.Model):
     producto = models.CharField(max_length=400, blank=False)
     precio = models.DecimalField(max_digits=10, decimal_places = 2, blank=False, default='')
 
+class historico(models.Model):
+    id = models.IntegerField(primary_key=True)
+    producto = models.CharField(max_length=400, blank=False)
+    precio = models.DecimalField(max_digits=10, decimal_places = 2, blank=False, default='')
+
+    class Meta:
+        managed = False
+        db_table = 'historico'

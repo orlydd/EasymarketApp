@@ -36,6 +36,7 @@ router.register('mejoresProductos', views.mejoresProductosView)
 router.register('mejoresSucursales', views.mejoresSucursalesView)
 router.register('proveedorAuxiliar', views.proveedorAuxView)
 router.register('funcion', views.funcionView)
+router.register('historico', views.historicoView)
 
 
 urlpatterns = [

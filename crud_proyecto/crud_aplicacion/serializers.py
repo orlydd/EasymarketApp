@@ -1,7 +1,12 @@
 from rest_framework import serializers
 from .models import ciudad, municipio, sucursal, producto, inventario, precioProducto, proveedor, pago, tipoSuscripcion, categoria, especialidad
 from .models import cliente, empleado, venta, ventaPago, suscripcion, cajero, gerente, sucursal_inventario, venta_Producto, proveedor_Producto
-from .models import mejoresEmpleados, mejoresProductos, mejoresSucursales, funcion
+from .models import mejoresEmpleados, mejoresProductos, mejoresSucursales, funcion, historico
+
+class historicoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = historico
+        fields = ('__all__')
 
 class funcionSerializer(serializers.ModelSerializer):
     class Meta:

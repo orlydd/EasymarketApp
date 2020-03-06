@@ -7,13 +7,13 @@ from django.db.models import Max, OuterRef
 from rest_framework.response import Response
 from .models import ciudad, municipio, sucursal, producto, inventario, precioProducto, proveedor, pago, categoria, tipoSuscripcion, especialidad
 from .models import cliente, empleado, venta, ventaPago, suscripcion, cajero, gerente, sucursal_inventario, venta_Producto, proveedor_Producto
-from .models import mejoresEmpleados, mejoresProductos, mejoresSucursales, funcion
+from .models import mejoresEmpleados, mejoresProductos, mejoresSucursales, funcion, historico
 from .serializers import ciudadSerializer, municipioSerializer, sucursalSerializer, productoSerializer, inventarioSerializer
 from .serializers import precioProductoSerialiazer, proveedorSerializer, pagoSerializer, clienteSerializer, especialidadSerializer
 from .serializers import gerenteSerializer,sucursal_inventarioSerializer, venta_productoSerializer, proveedor_productoSerializer
 from .serializers import empleadoSerializer, ventaSerializer, ventaPagoSerializer, suscripcionSerializer, cajeroSerializer, categoriaSerializer, tipoSuscripcionSerializer
 from .serializers import municipioAuxSerializer, empleadoAuxSerializer, productoAuxSerializer, sucursalAuxSerializer
-from .serializers import suscripcionAuxSerializer, ventaAuxSerializer, mejoresEmpleadosSerializer, mejoresProductosSerializer, mejoresSucursalesSerializer, funcionSerializer, proveedorAuxSerializer
+from .serializers import suscripcionAuxSerializer, ventaAuxSerializer, mejoresEmpleadosSerializer, mejoresProductosSerializer, mejoresSucursalesSerializer, funcionSerializer, proveedorAuxSerializer, historicoSerializer
 
 class ventaAuxView(viewsets.ModelViewSet):
     queryset = venta.objects.all()
@@ -145,6 +145,10 @@ class venta_productoView(viewsets.ModelViewSet):
 class proveedor_productoView(viewsets.ModelViewSet):
     queryset = proveedor_Producto.objects.all()
     serializer_class = proveedor_productoSerializer
+
+class historicoView(viewsets.ModelViewSet):
+    queryset = historico.objects.all()
+    serializer_class = historicoSerializer
 
 
 
