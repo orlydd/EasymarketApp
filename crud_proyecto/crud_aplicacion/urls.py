@@ -35,7 +35,7 @@ router.register('mejoresEmpleados', views.mejoresEmpleadosView)
 router.register('mejoresProductos', views.mejoresProductosView)
 router.register('mejoresSucursales', views.mejoresSucursalesView)
 router.register('proveedorAuxiliar', views.proveedorAuxView)
-router.register('funcion', views.funcionView, basename ='funcion')
+router.register('funcion', views.funcionView)
 
 
 urlpatterns = [

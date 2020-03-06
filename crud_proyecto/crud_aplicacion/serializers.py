@@ -52,9 +52,21 @@ class productoSerializer(serializers.ModelSerializer):
         fields = ('id', 'nombre', 'categoriaID')
 
 class productoAuxSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = producto
         fields = ('id', 'nombre', 'categoriaID')
+        depth = 1
+
+class funcionSerializer(serializers.ModelSerializer):
+    precio = serializers.SerializerMethodField('ultimo_precio')
+
+    def ultimo_precio(self, p):
+        return(p.ultimo_precio)
+        
+    class Meta:
+        model = producto
+        fields = ('id', 'nombre', 'categoriaID', 'precio')
         depth = 1
 
 class inventarioSerializer(serializers.ModelSerializer):

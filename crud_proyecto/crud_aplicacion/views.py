@@ -46,18 +46,13 @@ class sucursalAuxView(viewsets.ModelViewSet):
 class productoAuxView(viewsets.ModelViewSet):
     queryset = producto.objects.all()
     serializer_class = productoAuxSerializer
-
+    
 class funcionView(viewsets.ModelViewSet):
 
-    queryset = ''
-    serializer_class = funcionSerializer
+    queryset = producto.objects.annotate(ultimo_precio=Subquery(precioProducto.objects.filter(
+        productoID=OuterRef('pk')).order_by('-fecha').values('monto')[:1]))
 
-    def get(self, request):
-        productos = producto.objects.annotate(ultimo_precio=Subquery(precioProducto.objects.filter(
-            productoID=OuterRef('pk')).order_by('-fecha').values('monto')[:1]))
-        for producto in productos:
-            print(producto.ultimo_precio)
-            
+    serializer_class = funcionSerializer
 
 class empleadoAuxView(viewsets.ModelViewSet):
     queryset = empleado.objects.filter(activo=True)
